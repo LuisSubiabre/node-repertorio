@@ -39,7 +39,6 @@ app.put('/canciones/:id', (req, res) => {
     cancion.id = Number(id);
     const canciones = JSON.parse(fs.readFileSync(fileName, 'utf-8'));
     const index = canciones.findIndex(canciones => canciones.id == id);
-    console.log(index);
 
     if (index !== -1) {
         canciones[index] = req.body;
@@ -54,8 +53,8 @@ app.put('/canciones/:id', (req, res) => {
 app.delete('/canciones/:id', (req, res) => {
     const { id } = req.params; // Destructuring id
     const canciones = JSON.parse(fs.readFileSync(fileName, 'utf-8'));
-    const index = canciones.findIndex(d => d.id == id); // Filtra el id
-    console.log("->" + canciones.splice(index, 1)); // Elimina el id
+    const index = canciones.findIndex(canciones => canciones.id == id); // Filtra el id
+    canciones.splice(index, 1); // Elimina el id
     fs.writeFileSync(fileName, JSON.stringify(canciones), 'utf-8');
     res.json({ message: 'Canción eliminada correctamente' });
 });
